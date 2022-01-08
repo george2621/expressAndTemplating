@@ -20,4 +20,4 @@ const members = [
 
 ];
 
-module.exports = members;
+export default members;

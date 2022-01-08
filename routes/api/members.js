@@ -1,66 +1,21 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const members = require('../../members');
-const uuid = require("uuid");
-
-
+import { getAllMembers, getMemberById, createMember, updateMember, deleteMember } from '../../controllers/members.js'
 
 //Get all members 
-router.get('/', (req, res) => {
-    res.json(members);
-})
+router.get('/', getAllMembers);
 
 //Get member by id
-router.get('/:id', (req, res) => {
-    const selectedMember = members.some(member => member.id == req.params.id);
-
-    if (selectedMember) {
-        res.send(members.find(member => member.id == req.params.id));
-    } else {
-        res.status(400).json({ msg: `Member ${req.params.id} not found` })
-    }
-})
+router.get('/:id', getMemberById)
 
 //Add member
-router.post('/', (req, res) => {
-
-    const newMember = {
-        id: uuid.v4(),
-        name: req.body.name,
-        email: req.body.email,
-        active: 'active'
-    }
-    if (!newMember.name || !newMember.email) {
-        return res.status(400).json({ msg: "Please check name and email" })
-    }
-    members.push(newMember);
-    res.redirect('/');
-})
-
+router.post('/', createMember)
 
 //Update member
-router.put('/:id', (req, res) => {
-    const selectedItemToUpdateFounded = members.some(member => member.id == req.params.id);
-
-    if (selectedItemToUpdateFounded) {
-        const selectedItemToUpdate = members.find(member => member.id == req.params.id);
-        selectedItemToUpdate.name = req.body.name ? req.body.name : selectedItemToUpdate.name;
-        selectedItemToUpdate.email = req.body.email ? req.body.email : selectedItemToUpdate.email;
-        res.json({ msg: "Member added", members: members });
-    } else {
-        res.status(400).json({ msg: "Member doesn't exists" })
-    }
-})
+router.put('/:id', updateMember)
 
 //Delete member
-router.delete('/:id', (req, res) => {
-    const selectedItemToUpdateFounded = members.some(member => member.id == req.params.id);
+router.delete('/:id', deleteMember)
 
-    if (selectedItemToUpdateFounded) {
-        res.json({ msg: "Member Deleted", members: members.filter(member => member.id != req.params.id) });
-    } else {
-        res.status(400).json({ msg: "Member doesn't exists" })
-    }
-})
-module.exports = router;
 
+export default router;
