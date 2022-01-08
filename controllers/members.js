@@ -18,7 +18,7 @@ export const getMemberById = (req, res) => {
 
 export const createMember = (req, res) => {
     const newMember = {
-        id: uuid.v4(),
+        id: uuidv4(),
         name: req.body.name,
         email: req.body.email,
         active: 'active'
