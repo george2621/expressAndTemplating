@@ -1,6 +1,6 @@
 import express from "express";
 import { engine } from 'express-handlebars';
-import members from './members.js';
+import members from './controllers/members.js';
 import path from 'path';
 import router from './routes/api/members.js'
 const __dirname = path.resolve();

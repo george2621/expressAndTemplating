@@ -1,10 +1,31 @@
-import members from '../members.js';
+// import members from '../members.js';
 import { v4 as uuidv4 } from "uuid";
+
+let members = [
+    {
+        id: 1,
+        name: 'John Doe',
+        email: 'john@gmail.com',
+        status: 'active'
+    },
+    {
+        id: 2,
+        name: 'George Roumieh',
+        email: 'george@gmail.com',
+        active: 'inactive'
+    },
+    {
+        id: 3,
+        name: 'Roy Roumieh',
+        email: 'Roy@gmail.com',
+        active: 'active'
+    }
+
+];
 
 export const getAllMembers = (req, res) => {
     res.json(members);
 }
-
 export const getMemberById = (req, res) => {
     const selectedMember = members.some(member => member.id == req.params.id);
 
@@ -14,8 +35,6 @@ export const getMemberById = (req, res) => {
         res.status(400).json({ msg: `Member ${req.params.id} not found` })
     }
 }
-
-
 export const createMember = (req, res) => {
     const newMember = {
         id: uuidv4(),
@@ -27,9 +46,8 @@ export const createMember = (req, res) => {
         return res.status(400).json({ msg: "Please check name and email" })
     }
     members.push(newMember);
-    res.redirect('/');
+    res.render("index", { title: "Members App", members })
 }
-
 export const updateMember = (req, res) => {
     const selectedItemToUpdateFounded = members.some(member => member.id == req.params.id);
 
@@ -43,15 +61,15 @@ export const updateMember = (req, res) => {
     }
 
 }
-
-
 export const deleteMember = (req, res) => {
+
     const selectedItemToUpdateFounded = members.some(member => member.id == req.params.id);
-
-    if (selectedItemToUpdateFounded) {
-        res.json({ msg: "Member Deleted", members: members.filter(member => member.id != req.params.id) });
-    } else {
-        res.status(400).json({ msg: "Member doesn't exists" })
+    if (!selectedItemToUpdateFounded) {
+        return res.status(400).json({ msg: "Member doesn't exists" })
     }
-
+    members = members.filter(member => member.id != req.params.id);
+    res.render("index", { title: "Members App", members })
+    // res.redirect('/');
 }
+
+export default members;

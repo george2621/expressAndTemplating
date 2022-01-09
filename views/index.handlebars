@@ -10,8 +10,15 @@
     </div>
     <input type="submit" value="Add Member" class="btn btn-primary btn-block mt-4">
 </form>
+
+
 <ul class="list-group">
     {{#each members}}
-    <li class="list-group-item">{{this.name}}: {{this.email}}</li>
+    <li class="list-group-item" id={{this.id}}>{{this.name}}: {{this.email}}
+        <form action="/api/members/{{this.id}}" method="POST">
+            <input type="hidden" name="id" value={{this.id}}>
+            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+        </form>
+    </li>
     {{/each}}
 </ul>

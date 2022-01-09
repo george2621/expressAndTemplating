@@ -15,7 +15,7 @@ router.post('/', createMember)
 router.put('/:id', updateMember)
 
 //Delete member
-router.delete('/:id', deleteMember)
+router.post('/:id', deleteMember)
 
 
 export default router;
