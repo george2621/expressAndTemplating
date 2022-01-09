@@ -43,7 +43,7 @@ export const createMember = (req, res) => {
         active: 'active'
     }
     if (!newMember.name || !newMember.email) {
-        return res.status(400).json({ msg: "Please check name and email" })
+        return res.status(400).json({ msg: " name and email are required" })
     }
     members.push(newMember);
     res.render("index", { title: "Members App", members })
