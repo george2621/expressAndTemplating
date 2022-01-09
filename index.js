@@ -1,10 +1,9 @@
-const { urlencoded } = require("express");
-const express = require("express");
-const path = require('path');
-const logger = require('./middleware/logger.js')
-const { engine } = require('express-handlebars')
-const members = require('./members');
-
+import express from "express";
+import { engine } from 'express-handlebars';
+import members from './controllers/members.js';
+import path from 'path';
+import router from './routes/api/members.js'
+const __dirname = path.resolve();
 
 const app = express();
 
@@ -25,7 +24,7 @@ app.use(express.urlencoded({ extended: false }))
 //Set static folder
 app.use(express.static(path.join(__dirname, "public")))
 
-app.use("/api/members", require("./routes/api/members.js"))
+app.use("/api/members", router);
 
 const PORT = process.env.PORT || 5000;
 
